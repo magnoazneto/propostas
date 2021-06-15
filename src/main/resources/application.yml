@@ -3,11 +3,24 @@ micronaut:
     name: propostas
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: ${DATA_BASE_URL:`jdbc:postgresql://localhost`}:${DATA_BASE_PORT:5431}/${DATA_BASE_NAME:propostas_db}
     driverClassName: org.postgresql.Driver
-    username: postgres
-    password: ''
-    schema-generate: CREATE_DROP
+    username: '${DATA_BASE_USER:postgres}'
+    password: '${DATA_BASE_PASSWORD:root}'
     dialect: POSTGRES
-kafka.bootstrap.servers: localhost:9092
-jpa.default.properties.hibernate.hbm2ddl.auto: update
+jpa.default.properties.hibernate.hbm2ddl.auto: create-drop
+kafka:
+  bootstrap:
+    servers: '${KAFKA_HOST:localhost}:${KAFKA_PORT:9092}'
+
+grpc:
+  server:
+    port: 50052
+  client:
+    plaintext: true
+    max-retry-attemps: 10
+  channels:
+    analises:
+      address: '${ANALISES_URL:`localhost:50051`}'
+      plaintext: true
+      max-retry-attemps: 10

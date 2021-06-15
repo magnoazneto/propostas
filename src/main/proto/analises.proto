@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.zupedu.ot4";
+option java_outer_classname = "Analises";
+option objc_class_prefix = "HLW";
+
+package br.zupedu.ot4;
+
+service AnalisesService {
+  rpc analisaRestricao (AnaliseRequest) returns (AnaliseResponse) {}
+}
+
+message AnaliseRequest {
+  string documento = 1;
+  string nome = 2;
+  int64 idProposta = 3;
+}
+
+message AnaliseResponse {
+  enum ResultadoAnalise {
+    RESULTADO_DESCONHECIDO = 0;
+    COM_RESTRICAO = 1;
+    SEM_RESTRICAO = 2;
+  }
+  ResultadoAnalise resultadoAnalise = 4;
+  int64 idProposta = 5;
+}

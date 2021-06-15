@@ -8,13 +8,24 @@ option objc_class_prefix = "HLW";
 package br.zupedu.ot4;
 
 service PropostasService {
-  rpc send (PropostasRequest) returns (PropostasReply) {}
+  rpc criarProposta(PropostaRequest) returns (PropostaResponse) {}
 }
 
-message PropostasRequest {
-  string name = 1;
+message PropostaRequest {
+  message Endereco {
+    string logradouro = 1;
+    string numero = 2;
+    string cidade = 3;
+    string estado = 4;
+    string cep = 5;
+  }
+  string documento = 1;
+  string email = 2;
+  string nome = 3;
+  Endereco endereco = 4;
+  string salario = 5;
 }
 
-message PropostasReply {
-  string message = 1;
+message PropostaResponse {
+  int64 idProposta = 1;
 }

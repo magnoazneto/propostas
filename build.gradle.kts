@@ -48,6 +48,8 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testImplementation("io.micronaut:micronaut-http-client")
+    implementation("org.hibernate:hibernate-validator:6.1.6.Final")
+    implementation("io.micronaut.grpc:micronaut-grpc-client-runtime")
 
 }
 
