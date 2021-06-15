@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.zupedu.ot4";
+option java_outer_classname = "Propostas";
+option objc_class_prefix = "HLW";
+
+package br.zupedu.ot4;
+
+service PropostasService {
+  rpc send (PropostasRequest) returns (PropostasReply) {}
+}
+
+message PropostasRequest {
+  string name = 1;
+}
+
+message PropostasReply {
+  string message = 1;
+}
