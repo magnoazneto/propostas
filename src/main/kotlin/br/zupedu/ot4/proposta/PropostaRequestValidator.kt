@@ -13,7 +13,8 @@ import javax.validation.constraints.Positive
 
 @Introspected
 data class PropostaRequestValidator(
-    @field:NotBlank @field:CPForCNPJ @field:UniqueValue(fieldName = "documento", targetClass = "Proposta") val documento: String,
+    @field:NotBlank @field:CPForCNPJ @field:UniqueValue(fieldName = "documento", targetClass = Proposta::class)
+    val documento: String,
     @field:Email @field:NotBlank val email: String,
     @field:NotBlank val nome: String,
     val endereco: Endereco,

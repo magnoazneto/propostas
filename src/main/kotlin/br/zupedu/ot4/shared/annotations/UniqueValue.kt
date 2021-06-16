@@ -22,27 +22,30 @@ annotation class UniqueValue(
     val groups: Array<KClass<Any>> = [],
     val payload: Array<KClass<Payload>> = [],
     val fieldName: String,
-    val targetClass: String
+    val targetClass: KClass<*>
 )
 
 @Singleton
 @TransactionalAdvice
 class UniqueValueValidator(@Inject val manager: EntityManager): ConstraintValidator<UniqueValue, Any> {
 
+    lateinit var field: String
+    lateinit var targetClass: KClass<*>
+
+    override fun initialize(constraintAnnotation: UniqueValue) {
+        field = constraintAnnotation.fieldName
+        targetClass = constraintAnnotation.targetClass
+    }
+
     override fun isValid(
         value: Any?,
         annotationMetadata: AnnotationValue<UniqueValue>,
         context: ConstraintValidatorContext
     ): Boolean {
-        if(value == null){
-            return true
-        }
-
-        val targetClass: String = annotationMetadata.stringValue("targetClass").get()
-        val fieldName: String = annotationMetadata.stringValue("fieldName").get()
+        if(value == null) return true
 
         return manager
-            .createQuery("select 1 from $targetClass where $fieldName =:pValue")
+            .createQuery("select 1 from ${targetClass.simpleName} where $field =:pValue")
             .setParameter("pValue", value)
             .resultList
             .isEmpty()
