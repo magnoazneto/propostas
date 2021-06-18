@@ -19,6 +19,12 @@ class Transaction(
     }
 
     @Transactional
+    fun refreshAndCommit(obj: Any): Any{
+        manager.merge(obj)
+        return obj
+    }
+
+    @Transactional
     fun exec(f: () -> Any): Any {
         return f.invoke()
     }
