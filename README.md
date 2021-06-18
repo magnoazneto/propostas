@@ -1,3 +1,9 @@
+## Essa aplicação precisa de outros microserviços para funcionar bem. Os repositórios podem ser encontrados aqui:
+- [Análises](https://github.com/magnoazneto/analises)
+- [Cartões](https://github.com/magnoazneto/cartoes)
+
+Ainda em construção :)
+
 ## Micronaut 2.5.5 Documentation
 
 - [User Guide](https://docs.micronaut.io/2.5.5/guide/index.html)
@@ -21,8 +27,4 @@
 ## Feature hibernate-jpa documentation
 
 - [Micronaut Hibernate JPA documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#hibernate)
-
-## Feature testcontainers documentation
-
-- [https://www.testcontainers.org/](https://www.testcontainers.org/)
 
