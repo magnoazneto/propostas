@@ -3,7 +3,7 @@ micronaut:
     name: propostas
 datasources:
   default:
-    url: ${DATA_BASE_URL:`jdbc:postgresql://localhost`}:${DATA_BASE_PORT:5431}/${DATA_BASE_NAME:propostas_db}
+    url: ${DATA_BASE_URL:`jdbc:postgresql://localhost`}:${DATA_BASE_PORT:5432}/${DATA_BASE_NAME:propostas_db}
     driverClassName: org.postgresql.Driver
     username: '${DATA_BASE_USER:postgres}'
     password: '${DATA_BASE_PASSWORD:root}'

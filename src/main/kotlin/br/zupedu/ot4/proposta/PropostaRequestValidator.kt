@@ -39,22 +39,14 @@ data class PropostaRequestValidator(
     )
 
     fun toModel(): Proposta {
-        return Proposta(
+        val novaProposta = Proposta(
             documento = documento,
             nome = nome,
             email = email,
             status = StatusRestricao.NAO_ANALISADO,
-            endereco = endereco
+            enderecos = mutableSetOf(endereco)
         )
+        endereco.proposta = novaProposta
+        return novaProposta
     }
-}
-
-@Embeddable
-data class Endereco(
-    @field:NotBlank val logradouro: String,
-    @field:NotBlank val numero: String,
-    @field:NotBlank val cidade: String,
-    @field:NotBlank val estado: String,
-    @field:NotBlank val cep: String
-) {
 }
