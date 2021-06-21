@@ -1,6 +1,7 @@
 package br.zupedu.ot4.proposta
 
 import br.zupedu.ot4.*
+import br.zupedu.ot4.Endereco
 import br.zupedu.ot4.integracoes.AnalisesClientFactory
 import io.grpc.ManagedChannel
 import io.grpc.Status
@@ -11,7 +12,6 @@ import io.micronaut.context.annotation.Replaces
 import io.micronaut.grpc.annotation.GrpcChannel
 import io.micronaut.grpc.server.GrpcServerChannel
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -32,17 +32,18 @@ internal class PropostaEndpointTest(
     private lateinit var analisesStub: AnalisesServiceGrpc.AnalisesServiceBlockingStub
 
     private lateinit var propostaRequest: PropostaRequest.Builder
+    private var documentoValido = "13605825176"
 
     @BeforeEach
     internal fun setUp() {
         propostaRepository.deleteAll()
 
         propostaRequest = PropostaRequest.newBuilder()
-            .setDocumento("13605825176")
+            .setDocumento(documentoValido)
             .setEmail("teste@teste.com")
             .setNome("Tester")
             .setEndereco(
-                PropostaRequest.Endereco.newBuilder()
+                Endereco.newBuilder()
                     .setCep("00000-000")
                     .setLogradouro("Logradouro")
                     .setNumero("12")
@@ -64,8 +65,8 @@ internal class PropostaEndpointTest(
     fun `deve criar proposta com dados validos`() {
         val response: PropostaResponse = grpcClient.criarProposta(propostaRequest.build())
 
-        assertEquals(1L, response.idProposta)
-        assertTrue(propostaRepository.existsById(1L))
+        val propostaSalva = propostaRepository.findById(response.idProposta).get()
+        assertEquals(documentoValido, propostaSalva.documento)
     }
 
     @ParameterizedTest
@@ -101,13 +102,40 @@ internal class PropostaEndpointTest(
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["-300", "teste"])
+    @ValueSource(strings = ["-300", "-1", "teste"])
     fun `nao deve criar proposta com salario invalido`(salario: String) {
         assertThrows<StatusRuntimeException> {
             grpcClient.criarProposta(propostaRequest
                 .setEmail(salario).build())
         }.let { e ->
             assertEquals(Status.INVALID_ARGUMENT.code, e.status.code)
+        }
+    }
+
+    @Test
+    fun `deve retornar proposta para ID valido`() {
+        val request = propostaRequest.build()
+        val response: PropostaResponse = grpcClient.criarProposta(request)
+
+        val propostaEncontrada: PropostaConsultaResponse = grpcClient.consultarProposta(
+            PropostaConsultaRequest.newBuilder()
+                .setIdProposta(response.idProposta)
+                .build()
+        )
+        assertEquals(request.documento, propostaEncontrada.documento)
+        assertEquals(request.email, propostaEncontrada.email)
+    }
+
+    @Test
+    fun `deve retornar NOT_FOUND para proposta nao existente`() {
+        assertThrows<StatusRuntimeException> {
+            grpcClient.consultarProposta(
+                PropostaConsultaRequest.newBuilder()
+                    .setIdProposta(1L)
+                    .build()
+            )
+        }.let { e ->
+            assertEquals(Status.NOT_FOUND.code, e.status.code)
         }
     }
 
