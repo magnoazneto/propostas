@@ -1,8 +1,6 @@
 package br.zupedu.ot4.proposta
 
-import br.zupedu.ot4.PropostaRequest
-import br.zupedu.ot4.PropostaResponse
-import br.zupedu.ot4.PropostasServiceGrpc
+import br.zupedu.ot4.*
 import br.zupedu.ot4.shared.errors.ErrorHandler
 import io.grpc.stub.StreamObserver
 import javax.inject.Inject
@@ -20,6 +18,15 @@ class PropostaEndpoint (
     ) {
         val response = propostaService.novaProposta(PropostaRequestValidator(request))
         responseObserver.onNext(response)
+        responseObserver.onCompleted()
+    }
+
+    override fun consultarProposta(
+        request: PropostaConsultaRequest,
+        responseObserver: StreamObserver<PropostaConsultaResponse>
+    ) {
+        val responseGrpc = propostaService.consultaProposta(request.idProposta)
+        responseObserver.onNext(responseGrpc)
         responseObserver.onCompleted()
     }
 }

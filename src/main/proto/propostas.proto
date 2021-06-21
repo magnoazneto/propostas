@@ -9,16 +9,22 @@ package br.zupedu.ot4;
 
 service PropostasService {
   rpc criarProposta(PropostaRequest) returns (PropostaResponse) {}
+  rpc consultarProposta(PropostaConsultaRequest) returns (PropostaConsultaResponse) {}
+}
+
+message PropostaConsultaRequest {
+  int64 idProposta = 1;
+}
+
+message PropostaConsultaResponse {
+  string documento = 1;
+  string email = 2;
+  string nome = 3;
+  string salario = 5;
+  StatusRestricao status = 6;
 }
 
 message PropostaRequest {
-  message Endereco {
-    string logradouro = 1;
-    string numero = 2;
-    string cidade = 3;
-    string estado = 4;
-    string cep = 5;
-  }
   string documento = 1;
   string email = 2;
   string nome = 3;
@@ -28,4 +34,18 @@ message PropostaRequest {
 
 message PropostaResponse {
   int64 idProposta = 1;
+}
+
+message Endereco {
+  string logradouro = 1;
+  string numero = 2;
+  string cidade = 3;
+  string estado = 4;
+  string cep = 5;
+}
+
+enum StatusRestricao {
+  STATUS_DESCONHECIDO = 0;
+  COM_RESTRICAO = 1;
+  SEM_RESTRICAO = 2;
 }

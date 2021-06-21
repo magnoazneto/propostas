@@ -38,13 +38,19 @@ data class PropostaRequestValidator(
         }
     )
 
+    /**
+     * retorna uma nova instância de Proposta e realiza o link entre o endereço existente e a nova
+     * instancia de proposta
+     * @return uma instância de Proposta a ser salva no banco de dados
+     */
     fun toModel(): Proposta {
         val novaProposta = Proposta(
             documento = documento,
             nome = nome,
             email = email,
             status = StatusRestricao.NAO_ANALISADO,
-            enderecos = mutableSetOf(endereco)
+            enderecos = mutableSetOf(endereco),
+            salario = salario
         )
         endereco.proposta = novaProposta
         return novaProposta
