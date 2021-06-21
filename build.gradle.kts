@@ -50,6 +50,9 @@ dependencies {
     testImplementation("io.micronaut:micronaut-http-client")
     implementation("org.hibernate:hibernate-validator:6.1.6.Final")
     implementation("io.micronaut.grpc:micronaut-grpc-client-runtime")
+    testImplementation("org.mockito:mockito-core:3.8.0")
+    runtimeOnly("com.h2database:h2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.4.0-M1")
 
 }
 

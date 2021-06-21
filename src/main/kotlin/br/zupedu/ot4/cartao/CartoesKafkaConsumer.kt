@@ -17,7 +17,7 @@ import javax.validation.Valid
 class CartoesKafkaConsumer(
     @Inject val propostaRepository: PropostaRepository,
     @Inject val cartaoRepository: CartaoRepository
-    ) {
+) {
     private val LOGGER = LoggerFactory.getLogger(this::class.java)
 
     @Topic("novo-cartao")
