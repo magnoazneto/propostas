@@ -1,6 +1,8 @@
 package br.zupedu.ot4.cartao
 
 import br.zupedu.ot4.proposta.Proposta
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -11,6 +13,7 @@ class Cartao(
     val criadoEm: LocalDateTime,
     val numero: String,
     @field:OneToOne(cascade = [ CascadeType.ALL ])
+    @field:OnDelete(action = OnDeleteAction.CASCADE)
     val proposta: Proposta
 ) {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

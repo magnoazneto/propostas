@@ -57,6 +57,7 @@ dependencies {
     testImplementation("org.apache.kafka:kafka-clients:2.3.1:test")
     testImplementation("org.apache.kafka:kafka_2.12:2.3.1")
     testImplementation("org.apache.kafka:kafka_2.12:2.3.1:test")
+    testImplementation("org.awaitility:awaitility:4.1.0")
 }
 
 

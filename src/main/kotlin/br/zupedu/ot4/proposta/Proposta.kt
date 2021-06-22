@@ -20,6 +20,7 @@ class Proposta(
     @field:OnDelete(action = OnDeleteAction.CASCADE)
     val enderecos: Set<Endereco>,
     @field:OneToOne(cascade = [ CascadeType.MERGE ])
+    @field:OnDelete(action = OnDeleteAction.CASCADE)
     var cartao: Cartao? = null
 ) {
     @Id

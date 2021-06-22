@@ -5,4 +5,5 @@ import io.micronaut.data.jpa.repository.JpaRepository
 
 @Repository
 interface CartaoRepository : JpaRepository<Cartao, Long> {
+    fun existsByNumero(numeroCartao: String): Boolean
 }
