@@ -15,8 +15,7 @@ import javax.validation.Valid
 @KafkaListener(offsetReset = OffsetReset.EARLIEST, groupId = "propostas")
 @Validated
 class CartoesKafkaConsumer(
-    @Inject val propostaRepository: PropostaRepository,
-    @Inject val cartaoRepository: CartaoRepository
+    @Inject val propostaRepository: PropostaRepository
 ) {
     private val LOGGER = LoggerFactory.getLogger(this::class.java)
 
@@ -27,9 +26,8 @@ class CartoesKafkaConsumer(
         val propostaRelacionada = propostaRepository.findById(cartao.idProposta).orElseThrow {
             PropostaNaoEncontradaException("Proposta não encontrada para o id: ${cartao.idProposta}")
         }
-        val novoCartao = Cartao(cartao, propostaRelacionada)
-        propostaRelacionada.cartao = novoCartao
+        propostaRelacionada.cartao = Cartao(cartao, propostaRelacionada)
+        propostaRepository.update(propostaRelacionada)
         LOGGER.info("novo cartão de numero ${cartao.numero} associado a proposta de id ${propostaRelacionada.id}")
-        cartaoRepository.save(novoCartao)
     }
 }

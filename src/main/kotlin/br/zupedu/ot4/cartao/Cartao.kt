@@ -10,7 +10,7 @@ class Cartao(
     val titular: String,
     val criadoEm: LocalDateTime,
     val numero: String,
-    @field:OneToOne(cascade = [ CascadeType.MERGE ])
+    @field:OneToOne(cascade = [ CascadeType.ALL ])
     val proposta: Proposta
 ) {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
