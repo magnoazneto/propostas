@@ -54,6 +54,9 @@ dependencies {
     runtimeOnly("com.h2database:h2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.4.0-M1")
 
+    testImplementation("org.apache.kafka:kafka-clients:2.3.1:test")
+    testImplementation("org.apache.kafka:kafka_2.12:2.3.1")
+    testImplementation("org.apache.kafka:kafka_2.12:2.3.1:test")
 }
 
 

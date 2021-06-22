@@ -1,0 +1,7 @@
+kafka:
+  bootstrap:
+    servers: localhost:${random.port}
+  embedded:
+    enabled: true
+    topics:
+      - novo-cartao
