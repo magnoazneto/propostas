@@ -106,7 +106,7 @@ internal class PropostaEndpointTest(
     fun `nao deve criar proposta com salario invalido`(salario: String) {
         assertThrows<StatusRuntimeException> {
             grpcClient.criarProposta(propostaRequest
-                .setEmail(salario).build())
+                .setSalario(salario).build())
         }.let { e ->
             assertEquals(Status.INVALID_ARGUMENT.code, e.status.code)
         }
